@@ -40,9 +40,15 @@ public class Message {
     @Column(name = "fixed")
     private boolean fixed;
 
-    @Column(name = "sending_time")
+    @Column(name = "sending_time" , nullable = false, updatable = false)
     @CreatedDate
     private Date sendingTime;
 
-
+    public Message(User user, ChatAbstract toChat, String text) {
+        this.user = user;
+        this.toChat = toChat;
+        this.text = text;
+        this.fixed = false;
+        this.sendingTime = new Date();
+    }
 }

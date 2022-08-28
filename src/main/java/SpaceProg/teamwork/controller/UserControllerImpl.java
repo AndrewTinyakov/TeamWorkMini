@@ -1,11 +1,16 @@
 package SpaceProg.teamwork.controller;
 
+import SpaceProg.teamwork.exeption.SentInviteException;
 import SpaceProg.teamwork.exeption.notFoundExeption.UserNotFoundException;
+import SpaceProg.teamwork.model.ColleaguesInvite;
 import SpaceProg.teamwork.model.User;
+import SpaceProg.teamwork.model.page.ColleaguesInvitePage;
 import SpaceProg.teamwork.model.page.ColleaguesPage;
 import SpaceProg.teamwork.model.page.PostPage;
 import SpaceProg.teamwork.payload.request.upgrateRequest.UpdateUserRequest;
+import SpaceProg.teamwork.payload.response.LinkToUser;
 import SpaceProg.teamwork.payload.response.UserResponse;
+import SpaceProg.teamwork.payload.response.pageResponse.ColleaguesInvitePageResponse;
 import SpaceProg.teamwork.payload.response.pageResponse.ColleaguesPageResponse;
 import SpaceProg.teamwork.payload.response.pageResponse.PostPageResponse;
 import SpaceProg.teamwork.service.PostService;
@@ -15,6 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -68,8 +76,26 @@ class UserControllerImpl implements UserController {
     }
 
     @PutMapping("/colleague/{id}")
-    public void addColleague(@PathVariable Long id) throws UserNotFoundException {
-        userService.addColleague(id);
+    public void sendColleagueInvite(@PathVariable Long id) throws UserNotFoundException, SentInviteException {
+        userService.sendColleagueInvite(id);
+    }
+
+    @GetMapping("/{id}/colleaguesInvite")
+    public ColleaguesInvitePageResponse getUserColleaguesInvite(@PathVariable Long id,
+                                                                 @PageableDefault(size = 5)
+                                                                         Pageable pageable) throws UserNotFoundException {
+        ColleaguesInvitePage colleaguesInvitePage = userService.findUserColleaguesInvite(id, pageable);
+        return  covertInvitesToResponse(colleaguesInvitePage);
+    }
+
+    @PutMapping("/acceptColleagueInvite/{id}")
+    public void acceptRequest(@PathVariable Long id) throws Exception {
+        userService.addColleagueFromInvite(id);
+    }
+
+    @DeleteMapping("/colleague/{id}")
+    public void deleteFromFriend(@PathVariable Long id){
+        userService.deleteColleageById(id);
     }
 
     public UserResponse covertUserToResponse(User user) {
@@ -84,4 +110,9 @@ class UserControllerImpl implements UserController {
         return modelMapper.map(page, PostPageResponse.class);
     }
 
+    private ColleaguesInvitePageResponse covertInvitesToResponse(ColleaguesInvitePage colleaguesInvitePage) {
+
+
+        return modelMapper.map(colleaguesInvitePage, ColleaguesInvitePageResponse.class);
+    }
 }

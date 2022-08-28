@@ -12,9 +12,9 @@ import static javax.persistence.InheritanceType.SINGLE_TABLE;
 @Data
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = SINGLE_TABLE)
-@DiscriminatorValue("CA")
 @Table(name = "chats")
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "dbtype", discriminatorType = DiscriminatorType.STRING)
 public abstract class ChatAbstract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,7 @@ public abstract class ChatAbstract {
 
     @Column(name = "name")
     private String name;
+
     @OneToMany(mappedBy = "toChat")
     private List<Message> messageList;
 

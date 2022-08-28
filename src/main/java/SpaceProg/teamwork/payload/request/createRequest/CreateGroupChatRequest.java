@@ -11,5 +11,5 @@ import java.util.Set;
 public class CreateGroupChatRequest {
     String name;
 
-    Set<User> userSetOfChat;
+    Set<Long> userIdSetOfChat;
 }

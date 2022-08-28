@@ -1,5 +1,6 @@
 package SpaceProg.teamwork.controller;
 
+import SpaceProg.teamwork.exeption.SentInviteException;
 import SpaceProg.teamwork.exeption.notFoundExeption.UserNotFoundException;
 import SpaceProg.teamwork.model.User;
 import SpaceProg.teamwork.model.page.ColleaguesPage;
@@ -30,7 +31,7 @@ public interface UserController {
                                                      @PageableDefault(size = 10)
                                                              Pageable pageable) throws UserNotFoundException;
 
-    public void addColleague(@PathVariable Long id) throws UserNotFoundException;
+    public void sendColleagueInvite(@PathVariable Long id) throws UserNotFoundException, SentInviteException;
 
     public UserResponse covertUserToResponse(User user);
 

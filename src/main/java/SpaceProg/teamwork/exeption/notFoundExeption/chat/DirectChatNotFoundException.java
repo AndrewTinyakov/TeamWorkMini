@@ -1,4 +1,4 @@
 package SpaceProg.teamwork.exeption.notFoundExeption.chat;
 
-public class DirectChatNotFoundException extends ChatNotFoundException{
+public class DirectChatNotFoundException extends Exception {
 }

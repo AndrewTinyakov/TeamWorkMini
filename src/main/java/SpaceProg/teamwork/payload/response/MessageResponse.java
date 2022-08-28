@@ -22,7 +22,16 @@ public class MessageResponse {
 
     private boolean fixed;
 
-    private Set<Long> usersIdCheckedMessages;
+    private Set<LinkToUser> usersCheckedMessages;
 
     private Date sendingTime;
+
+    public MessageResponse(LinkToUser linkToUser, Long chatId, String text, boolean fixed, Set<LinkToUser> usersCheckedMessages, Date sendingTime) {
+        this.linkToUser = linkToUser;
+        this.chatId = chatId;
+        this.text = text;
+        this.fixed = fixed;
+        this.usersCheckedMessages = usersCheckedMessages;
+        this.sendingTime = sendingTime;
+    }
 }

@@ -45,6 +45,10 @@ public class User {
     @Column(name = "surname", nullable = false)
     private String surname;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Image avatar;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
@@ -68,6 +72,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_id1")
     )
     private Set<User> colleaguesSecond;
+
+    @OneToMany(mappedBy = "recipient")
+    private Set<ColleaguesInvite> colleaguesInvites;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

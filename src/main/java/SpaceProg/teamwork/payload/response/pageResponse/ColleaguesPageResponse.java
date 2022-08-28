@@ -1,6 +1,5 @@
 package SpaceProg.teamwork.payload.response.pageResponse;
 
-import SpaceProg.teamwork.model.User;
 import SpaceProg.teamwork.payload.response.LinkToUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
